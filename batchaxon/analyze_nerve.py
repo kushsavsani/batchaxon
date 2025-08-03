@@ -97,18 +97,18 @@ def get_nerve_data(nerve_dir_path):
                    
             img_data = {
                 'name':img_name,
-                'csa':overlay_data,
+                'csa':overlay_data * 0.217391**2,
                 'total_axons':morph_data['total_axons'],
                 'g-ratio':morph_data['g-ratio'],
-                'axon_diam':morph_data['axon_diam']
+                'axon_diam':morph_data['axon_diam']*0.217391
             }
         else:
             img_data = {
                 'name':img_name,
-                'csa':1474560,
+                'csa':1474560, # NEED A CONVERSION FACTOR FOR 100X MAGNIFICATION
                 'total_axons':morph_data['total_axons'],
                 'g-ratio':morph_data['g-ratio'],
-                'axon_diam':morph_data['axon_diam']
+                'axon_diam':morph_data['axon_diam']*0.217391
             }
         
         nerve_data.append(img_data)
