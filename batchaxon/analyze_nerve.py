@@ -100,10 +100,10 @@ def get_nerve_data(nerve_dir_path):
         '''
         conversion factors:
         	    um	    pixels	conversion
-        4x      500	    230	    2.173913043
-        10x     100	    115    	0.769230769
-        20x     100	    230    	0.434782609
-        40x	    50	    230	    0.217391304
+        4x      500	    230     2.173913043
+        10x     100	    115     0.769230769
+        20x     100	    230     0.434782609
+        40x	    50	    230     0.217391304
         '''
         if mag == 40: 
             overlay_file_path = os.path.join(overlay_dir_path, img_name+'_FO.tif')

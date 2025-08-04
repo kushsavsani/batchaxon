@@ -38,7 +38,7 @@ for animal_dir_name in os.listdir(study_dir_path):
             current_row += 1
             
             # place 4x image data
-            fourx_csa = fourx_df[(fourx_df['Animal'] == animal_dir_name) & (fourx_df['Nerve'] == nerve_dir_name)]['CSA'].iloc[0]*0.217391
+            fourx_csa = fourx_df[(fourx_df['Animal'] == animal_dir_name) & (fourx_df['Nerve'] == nerve_dir_name)]['CSA'].iloc[0]*2.173913043
             if nerve_dir_name[-4:] == 'Prox':
                 worksheet.write(current_row, 0, f'{animal_dir_name} - Proximal', bold_format)
             elif nerve_dir_name[-4:] == 'Dist':
