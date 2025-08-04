@@ -10,6 +10,7 @@ workbook_path = os.path.join(os.path.join(study_dir_path, os.path.basename(study
 workbook = xlsxwriter.Workbook(workbook_path)
 headers = ['Slide Number - Nerve', 'Sample', 'CSA (um2)', 'Total Axons', 'G ratio', 'Axon Diameter', 'Full Axon Count', 'Axons/um2']
 
+# format all the possible cell types for the spreadsheet
 header_format = workbook.add_format({'border':2, 'bold':True})
 bold_format = workbook.add_format({'bold':True})
 grey_format = workbook.add_format({'bg_color':"#8a8a8a", 'pattern':1})
@@ -64,8 +65,8 @@ for animal_dir_name in os.listdir(study_dir_path):
                 worksheet.write(current_row, 7, entry['total_axons'] / entry['csa'])
                 current_row += 1
             last_row = current_row-1
-            worksheet.conditional_format(first_row, 3, last_row, 3, {'type':'2_color_scale', 'min_color':"#ffffff", 'max_color':"#af0000"})
-            worksheet.conditional_format(first_row, 4, last_row, 4, {'type':'2_color_scale', 'min_color':"#ffffff", 'max_color':"#009908"})
+            worksheet.conditional_format(first_row, 3, last_row, 3, {'type':'2_color_scale', 'min_color':"#ffffff", 'max_color':"#d53c3c"})
+            worksheet.conditional_format(first_row, 4, last_row, 4, {'type':'2_color_scale', 'min_color':"#ffffff", 'max_color':"#2DB133"})
             
             worksheet.write(current_row, 1, f"Totals (n={nerve_agg_xl_data['total_imgs']})", bold_format)
             worksheet.write_number(current_row, 2, nerve_agg_xl_data['csa'], bold_format)

@@ -1,9 +1,18 @@
+'''
+process_overlay: program to process the 40X overlay images
+overlay images are manually created in Fiji
+the program opens the image in Fiji and exports the overlay data to a temp file, then deletes the file after deleting it
+requirement: the program saves the path to the user's Fiji executable in a text file. if the program is not working, check ot make sure that file path is correct
+'''
+
+# import necessary dependencies
 import os
 import subprocess
 import roifile
 from PIL import Image, ImageDraw
 import numpy as np
 
+# set the path for the hard coded macro that creates the overlay roi file and where that roi file will be saved
 macro_path = r"batchaxon\overlay_analysis\export_roi.ijm"
 roi_path = r"batchaxon\overlay_analysis\temp_outline.roi"
 
@@ -15,10 +24,9 @@ def get_fiji_path():
         with open(r"batchaxon\overlay_analysis\fiji_executable_path.txt", 'w') as f: print(fiji_executable_path, file=f)
     return fiji_executable_path
 
+# run the fiji macro and return True if it successfully runs
 def run_fiji_automation(img_path):
     fiji_executable_path = get_fiji_path()
-    with Image.open(img_path) as img:
-        image_width, image_height = img.size
     if os.path.exists(roi_path):
         os.remove(roi_path)
     command_args = f"{img_path},{roi_path}"
@@ -33,6 +41,7 @@ def run_fiji_automation(img_path):
         return False
     return True
 
+# get the area of the overlay from the temp roi file, then delete the file
 def get_overlay_area(img_path):
     run_fiji_automation(img_path)    
     

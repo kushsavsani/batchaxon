@@ -15,10 +15,12 @@ order: first make the aggregate file
        place totals after that
 '''
 
+# import the necessary dependencies
 import os
 import pandas as pd
 from overlay_analysis import process_overlay
 
+# make the aggregate spreadsheet for all images of a nerve, and return the file path to that spreadsheet
 def make_aggregate_xl(morph_dir_path):
     print(f'      Making aggregate spreadsheet for {os.path.basename(os.path.dirname(morph_dir_path))}')
     agg_df = pd.DataFrame()
@@ -35,7 +37,9 @@ def make_aggregate_xl(morph_dir_path):
     agg_df_path = os.path.join(animal_dir_path, animal_dir_name+'_'+nerve_dir_name+'.xlsx')
     agg_df.to_excel(agg_df_path)
     return agg_df_path
-    
+
+# get the total axons, mean g-ratio, and mean axon diameter from the image's morphometrics file
+# returns the data as a dictionary
 def get_img_data(morph_file_path):
     morph_file_df = pd.read_excel(morph_file_path)
     
@@ -46,7 +50,9 @@ def get_img_data(morph_file_path):
     }
 
     return img_data
-    
+
+# gets total axons, mean g-ratio, and mean axon diameter (weighted average) from the aggregate data file
+# returns the data as a dictionary
 def get_agg_data(agg_xl_path):
     agg_xl_df = pd.read_excel(agg_xl_path)
     agg_xl_data = {
@@ -58,14 +64,15 @@ def get_agg_data(agg_xl_path):
     
     return agg_xl_data
 
+# finds the magnification in the nerve folder based on the naming convention
 def find_mag(subdirs):
-    # finds the magnification in the nerve folder based on the naming convention
     mags = [item.split('_')[0] for item in subdirs]
     mags.remove('4x')
     return int(mags[0][:mags[0].find('x')])
 
+# from the input of a path to a nerve directory
+# returns a list of dicts for each image and a dict for totals/averages
 def get_nerve_data(nerve_dir_path):
-    # this is the function that will do all the processing
     nerve_dir_subdirs = os.listdir(nerve_dir_path)
     nerve_dir_subdirs = [i.lower() for i in nerve_dir_subdirs]
     mag = find_mag(nerve_dir_subdirs)
@@ -89,7 +96,15 @@ def get_nerve_data(nerve_dir_path):
         img_name = morph_file_name[:morph_file_name.find('.xlsx')]
         morph_file_path = os.path.join(morph_dir_path, morph_file_name)
         morph_data = get_img_data(morph_file_path)
-       
+        
+        '''
+        conversion factors:
+        	    um	    pixels	conversion
+        4x      500	    230	    2.173913043
+        10x     100	    115    	0.769230769
+        20x     100	    230    	0.434782609
+        40x	    50	    230	    0.217391304
+        '''
         if mag == 40: 
             overlay_file_path = os.path.join(overlay_dir_path, img_name+'_FO.tif')
             print(f'      Getting overlay data for {morph_file_name}...')
