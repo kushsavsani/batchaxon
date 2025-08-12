@@ -12,6 +12,18 @@ print("Opening image and converting overlay...");
 open(inputImagePath);
 if (nImages() == 0) { exit("FATAL: Image failed to open."); }
 
+width = getWidth();
+height = getHeight();
+
+newWidth = floor(width / 256) * 256;
+newHeight = floor(height / 256) * 256;
+
+xStart = (width - newWidth) / 2;
+yStart = (height - newHeight) / 2;
+
+makeRectangle(xStart, yStart, newWidth, newHeight);
+run("Crop");
+
 run("To ROI Manager");
 count = roiManager("count");
 print("Found " + count + " ROIs.");
