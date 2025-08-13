@@ -14,7 +14,6 @@ import numpy as np
 
 # set the path for the hard coded macro that creates the overlay roi file and where that roi file will be saved
 macro_path = r"batchaxon\overlay_analysis\export_roi.ijm"
-roi_path = r"batchaxon\overlay_analysis\temp_outline.roi"
 
 # get the file path to the fiji executable
 def get_fiji_path():
@@ -27,6 +26,8 @@ def get_fiji_path():
 # run the fiji macro and return True if it successfully runs
 def run_fiji_automation(img_path):
     fiji_executable_path = get_fiji_path()
+    roi_path = img_path.split('.')[0] + '.roi'
+    
     if os.path.exists(roi_path):
         os.remove(roi_path)
     command_args = f"{img_path},{roi_path}"
@@ -43,8 +44,9 @@ def run_fiji_automation(img_path):
 
 # get the area of the overlay from the temp roi file, then delete the file
 def get_overlay_area(img_path):
-    run_fiji_automation(img_path)    
+    run_fiji_automation(img_path)
     
+    roi_path = img_path.split('.')[0] + '.roi'
     roi = roifile.ImagejRoi.fromfile(roi_path)
     with Image.open(img_path) as img:
         image_width, image_height = img.size
