@@ -26,6 +26,7 @@ for animal_dir_name in os.listdir(study_dir_path):
     worksheet = workbook.add_worksheet(animal_dir_name)
     current_row = 0
     animal_dir_path = os.path.join(study_dir_path, animal_dir_name)
+    print(animal_dir_path, os.listdir(animal_dir_path))
     for nerve_dir_name in os.listdir(animal_dir_path):
         nerve_dir_path = os.path.join(animal_dir_path, nerve_dir_name)
         if os.path.isdir(nerve_dir_path):
@@ -59,6 +60,9 @@ for animal_dir_name in os.listdir(study_dir_path):
                 worksheet.write(current_row, 1, entry['name'])
                 worksheet.write(current_row, 2, entry['csa'])
                 worksheet.write(current_row, 3, entry['total_axons'])
+                
+                print(f'-----------------------------------\nThe g-ratio for {entry["name"]} is {entry["g-ratio"]}\n-------------------------------------')
+                
                 worksheet.write(current_row, 4, entry['g-ratio'])
                 worksheet.write(current_row, 5, entry['axon_diam'])
                 worksheet.write(current_row, 6, '', grey_format)

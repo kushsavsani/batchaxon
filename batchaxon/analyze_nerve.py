@@ -109,7 +109,7 @@ def get_nerve_data(nerve_dir_path):
             overlay_file_path = os.path.join(overlay_dir_path, img_name+'_FO.tif')
             print(f'      Getting overlay data for {morph_file_name}...')
             overlay_data = process_overlay.get_overlay_area(overlay_file_path)
-                   
+            
             img_data = {
                 'name':img_name,
                 'csa':overlay_data * 0.217391**2,

@@ -30,7 +30,26 @@ print("Found " + count + " ROIs.");
 
 if (count == 0) { exit("FATAL: No outline was found."); }
 
-print("Selecting first ROI and saving...");
+// print("Selecting first ROI and saving...");
+// roiManager("select", 0);
+// roiManager("save", outputRoiPath);
+
+if (count > 1) {
+    print("Combining all ROIs into a single ROI...");
+    indices = newArray(count);
+    for (i = 0; i < count; i++) {
+        indices[i] = i;
+    }
+    roiManager("select", indices);
+    roiManager("Combine");
+    roiManager("reset");
+    roiManager("add"); // add combined ROI
+} else {
+    print("Only one ROI found, skipping combine...");
+    // leave it as-is in ROI Manager
+}
+
+print("Saving combined ROI...");
 roiManager("select", 0);
 roiManager("save", outputRoiPath);
 
