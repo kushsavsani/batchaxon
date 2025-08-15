@@ -76,7 +76,7 @@ for animal_dir_name in os.listdir(study_dir_path):
             worksheet.write_number(current_row, 2, nerve_agg_xl_data['csa'], bold_format)
             worksheet.write_number(current_row, 3, nerve_agg_xl_data['total_axons'], bold_format)
             worksheet.write_number(current_row, 4, nerve_agg_xl_data['g-ratio'], bold_format)
-            worksheet.write_number(current_row, 5, nerve_agg_xl_data['axon_diam'], bold_format)
+            worksheet.write_number(current_row, 5, nerve_agg_xl_data['axon_diam']*0.217391, bold_format)
             worksheet.write_number(current_row, 6, nerve_agg_xl_data['total_axons']/nerve_agg_xl_data['csa']*fourx_csa, bold_format)
             worksheet.write_number(current_row, 7, nerve_agg_xl_data['total_axons']/nerve_agg_xl_data['csa'], bold_format)
             current_row += 4
